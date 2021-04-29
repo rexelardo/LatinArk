@@ -39,17 +39,45 @@ logout = async () => {
 OpenUserInfo = async() =>{
     user = await Moralis.user.current();
     if (user){
-        showElement(userInfo)
+        const email = user.get('email');
+        if (email){
+            userEmailField.value = email;
+        }else{
+            userEmailField.value = '';
+        }
+        userUsernameField.value = user.get('username');
+
+        const userAvatar = user.get('avatar');
+        if (userAvatar){
+            userAvatarImage.src = userAvatar.url();
+            showElement(userAvatarImage);
+        }else{
+            hideElement(userAvatarImage);
+        }
+        showElement(userInfo);
     }else{
         login();
     }
 }
 
+saveUserInfo = async() => {
+    user.set('email', userEmailField.value);
+    user.set('username', userUsernameField.value)
+    if (userAvatarFile.files.length > 0) {
+        const file = userAvatarFile.files[0];
+        const name = "avatar.jpg";
+      
+        const avatar = new Moralis.File(name, file);
+        user.set('avatar',avatar);
+      }
+      await user.save();
+      alert('User info saved successfully!');
+      OpenUserInfo();
+}
 
 
-
-hideElement = (element) => element.style.display = 'none';
-showElement = (element) => element.style.display = 'block';
+hideElement = (element) => element.style.display = "none";
+showElement = (element) => element.style.display = "block";
 
 const userConnectButton = document.getElementById('btnConnect');
 userConnectButton.onclick = login;
@@ -58,7 +86,16 @@ const userProfileButton = document.getElementById('btnUserInfo');
 userProfileButton.onclick = OpenUserInfo;
 
 const userInfo = document.getElementById('userInfo');
+const userUser = document.getElementById('txtUsername');
+const userEmailField = document.getElementById('txtEmail');
+const userAvatarImage = document.getElementById('imgAvatar');
+const userAvatarFile = document.getElementById('fileAvatar');
+
+
 document.getElementById('btnCloseUserInfo').onclick = () => hideElement(userInfo);
 document.getElementById('btnLogout').onclick = logout;
+document.getElementById('btnSaveUserInfo').onclick = saveUserInfo;
+
+
 init();
 
