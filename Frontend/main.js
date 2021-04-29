@@ -14,8 +14,8 @@ InitUser = async () => {
         hideElement(userConnectButton);
         showElement(userProfileButton);
     }else{
-        hideElement(userProfileButton);
         showElement(userConnectButton);
+        hideElement(userProfileButton);
     }
 }
 
