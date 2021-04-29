@@ -4,7 +4,6 @@ Moralis.serverURL = 'https://k8lq9f7lkimp.moralis.io:2053/server'
 init = async () => {
     window.web3 = await Morialis.web3.enable(); 
     InitUser();
-
 }
 
 
