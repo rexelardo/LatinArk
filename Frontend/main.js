@@ -2,6 +2,7 @@ Moralis.initialize("3IcvId63X3g2jWHA2t2OCOFDHmfOw3PbF9etB6Mt");
 Moralis.serverURL = 'https://k8lq9f7lkimp.moralis.io:2053/server'
 
 init = async () => {
+    hideElement(userInfo)
     window.web3 = await Morialis.web3.enable(); 
     InitUser();
 }
@@ -33,8 +34,10 @@ showElement = (element) => element.style.display = 'block';
 
 const userConnectButton = document.getElementById('btnConnect');
 userConnectButton.onclick = login;
+
 const userProfileButton = document.getElementById('btnUserInfo');
 
+const userInfo = document.getElementById('userInfo');
 
 init();
 
