@@ -2,7 +2,7 @@ Moralis.initialize("3IcvId63X3g2jWHA2t2OCOFDHmfOw3PbF9etB6Mt");
 Moralis.serverURL = 'https://k8lq9f7lkimp.moralis.io:2053/server'
 
 init = async () => {
-    window.web3 = await Morialis.web3.enable() ; 
+    window.web3 = await Morialis.web3.enable(); 
     InitUser();
 
 }
@@ -22,7 +22,7 @@ InitUser = async () => {
 login = async () => {
     try {
         await Moralis.Web3.authenticate();
-        initUser();
+        InitUser();
     } catch (error) {
         alert(error)
     }
