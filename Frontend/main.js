@@ -78,16 +78,36 @@ saveUserInfo = async() => {
       OpenUserInfo();
 }
 
+createItem = async () => {
+    if (CreateItemFile.files.length == 0){
+        alert('Please select a file')
+        return;
+    } else if (CreateItemNameField.value.length == 0){
+        alert('Please give the item a name')
+        return;
+    }
+}
+
+
+
+
 
 hideElement = (element) => element.style.display = "none";
 showElement = (element) => element.style.display = "block";
 
+
+//NavBar
 const userConnectButton = document.getElementById('btnConnect');
 userConnectButton.onclick = login;
 
 const userProfileButton = document.getElementById('btnUserInfo');
 userProfileButton.onclick = OpenUserInfo;
 
+const openCreateItemButton = document.getElementById('btnOpenCreateItem');
+openCreateItemButton.onclick = () => showElement(CreateItemForm);
+
+
+// User Profile
 const userInfo = document.getElementById('userInfo');
 const userUsernameField = document.getElementById('txtUsername');
 const userEmailField = document.getElementById('txtEmail');
@@ -100,6 +120,7 @@ document.getElementById('btnLogout').onclick = logout;
 document.getElementById('btnSaveUserInfo').onclick = saveUserInfo;
 
 
+// Item Creation
 const CreateItemForm = document.getElementById('createItem');
 
 const CreateItemNameField = document.getElementById('txtCreateItemName');
@@ -107,9 +128,6 @@ const CreateItemDescriptionField = document.getElementById('txtCreateItemDescrip
 const CreateItemPriceField = document.getElementById('numCreateItemPrice');
 const CreateItemStatusField = document.getElementById('selectCreateItemStatus');
 const CreateItemFile = document.getElementById('fileCreateItemFile');
-
-const openCreateItemButton = document.getElementById('btnOpenCreateItem');
-openCreateItemButton.onclick = () => showElement(CreateItemForm);
 document.getElementById('btnCloseCreateItem').onclick = () => hideElement(CreateItemForm);
 
 init();
