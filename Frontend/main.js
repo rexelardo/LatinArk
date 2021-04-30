@@ -86,7 +86,7 @@ const userProfileButton = document.getElementById('btnUserInfo');
 userProfileButton.onclick = OpenUserInfo;
 
 const userInfo = document.getElementById('userInfo');
-const userUser = document.getElementById('txtUsername');
+const userUsernameField = document.getElementById('txtUsername');
 const userEmailField = document.getElementById('txtEmail');
 const userAvatarImage = document.getElementById('imgAvatar');
 const userAvatarFile = document.getElementById('fileAvatar');
