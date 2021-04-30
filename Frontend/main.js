@@ -3,7 +3,7 @@ Moralis.serverURL = 'https://k8lq9f7lkimp.moralis.io:2053/server'
 
 init = async () => {
     hideElement(userInfo);
-    window.web3 = await Morialis.web3.enable(); 
+    window.web3 = await Morialis.Web3.enable(); 
     initUser();
 }
 
@@ -37,7 +37,7 @@ logout = async () => {
 
 
 OpenUserInfo = async() =>{
-    user = await Moralis.user.current();
+    user = await Moralis.User.current();
     if (user){
         const email = user.get('email');
         if (email){
