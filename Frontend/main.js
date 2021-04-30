@@ -30,7 +30,7 @@ login = async () => {
 
 
 logout = async () => {
-    await Moralis.user.logOut();
+    await Moralis.User.logOut();
     hideElement(userInfo);
     initUser();
 }
