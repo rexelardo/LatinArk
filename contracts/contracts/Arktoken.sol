@@ -4,11 +4,11 @@ import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 
 
-contract ArkToken is ERC721 {
+contract Arktoken is ERC721 {
     using Counters for Counters.Counter;
-    Counters.Counter private _TokenIds;
+    Counters.Counter private _tokenIds;
 
-    constructor () ERC721("ArkToken","ARK"){}
+    constructor () ERC721("Arktoken","ARK"){}
 
     struct Item {
         uint256 id;
@@ -16,7 +16,7 @@ contract ArkToken is ERC721 {
         string uri;
     }
 
-    mapping(uint256 => Item) public Item;
+    mapping(uint256 => Item) public Items;
 
     function createItem(string memory uri) public returns (uint256){
         _tokenIds.increment();

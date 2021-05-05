@@ -1,5 +1,5 @@
-const ArkToken = artifacts.require("ArkToken");
+const Arktoken = artifacts.require("Arktoken");
 
 module.exports = function (deployer) {
-  deployer.deploy(ArkToken);
+  deployer.deploy(Arktoken);
 };
