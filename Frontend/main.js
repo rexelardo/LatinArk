@@ -10,7 +10,6 @@ init = async () => {
 	window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
 	
     initUser();
-	loadUserItems(); 
 }
 
 
@@ -21,6 +20,7 @@ initUser = async () => {
         showElement(userProfileButton);
         showElement(openCreateItemButton);
 		showElement(openUserItemsButton);
+        loadUserItems(); 
     }else{
         showElement(userConnectButton);
         hideElement(userProfileButton);
@@ -105,11 +105,37 @@ openUserItems = async() =>{
 
 loadUserItems = async() =>{
     const ownedItems = await Moralis.Cloud.run("getUserItems");
-	console.log(ownedItems);
+	ownedItems.forEach(item => {
+        getAndRenderItemData(item, renderUserItem)
+    });
 }
 
+initTemplate = (id) => {
+    const template = document.getElementById(id);
+    template.id = "";
+    template.parentNode.removeChild(template);
+    return template;
+}
 
+renderUserItem = (item) => {
+    const userItem = userItemTemplate.cloneNode(true);
+    userItem.getElementsByTagName('img')[0].src = item.image;
+    userItem.getElementsByTagName('img')[0].alt = item.name;
+    userItem.getElementsByTagName('h5')[0].innerText = item.name;
+    userItem.getElementsByTagName('p')[0].innerText = item.description;
+    userItems.appendChild(item);
+}
 
+getAndRenderItemData = (item, renderfunction) => {
+    fetch(item.tokenUri)
+    .then(response => response.json())
+    .then(data => {
+        data.symbol = item.symbol;
+        data.tokenId = item.tokenId;
+        data.tokenAddress = item.tokenAddress;
+        renderfunction(data);
+    })
+}
 
     const nftFileMetadataFile = new Moralis.File("metadata.json", {base64 : btoa(JSON.stringify(metadata))});
     await nftFileMetadataFile.saveIPFS();
@@ -195,6 +221,10 @@ const userItems = document.getElementById('userItemsList');
 document.getElementById('btnCloseUserItems').onclick = () => hideElement(userItemsSection);
 const openUserItemsButton = document.getElementById('btnMyItems');
 openUserItemsButton.onclick = openUserItems;
+
+
+const userItemTemplate = initTemplate('itemTemplate');
+
 
 init();
 
