@@ -123,7 +123,7 @@ renderUserItem = (item) => {
     userItem.getElementsByTagName('img')[0].alt = item.name;
     userItem.getElementsByTagName('h5')[0].innerText = item.name;
     userItem.getElementsByTagName('p')[0].innerText = item.description;
-    userItems.appendChild(item);
+    userItems.appendChild(userItem);
 }
 
 getAndRenderItemData = (item, renderfunction) => {
