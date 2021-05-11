@@ -47,7 +47,7 @@ contract LatinArkContract {
         itemsForSale.push(AuctionItem(newItemId, tokenAddress, tokenId, payable(msg.sender), askingPrice, false));
         activeItems[tokenAddress][tokenId] = true;
 
-        assert(itemsForSale[newItemId].id = newItemId);
+        assert(itemsForSale[newItemId].id == newItemId);
         emit itemAdded(newItemId, tokenId, tokenAddress, askingPrice);
         return newItemId;
     }
