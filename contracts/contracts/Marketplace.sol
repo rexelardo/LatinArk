@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "../contracts/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract LatinArkContract {
     struct AuctionItem {
@@ -31,13 +31,13 @@ contract LatinArkContract {
     }
 
     modifier ItemExists(uint256 id){
-        require(id < itemsForSale.length && itemsForSale[id].id == id, "could not find item")
+        require(id < itemsForSale.length && itemsForSale[id].id == id, "could not find item");
         _;
     }
 
 
     modifier IsForSale(uint256 id){
-        require(itemsForSale[id].isSold == false, "Item is already sold")
+        require(itemsForSale[id].isSold == false, "Item is already sold");
         _;
     }
 
@@ -58,9 +58,9 @@ contract LatinArkContract {
 
         itemsForSale.isSold = true;
         activeItems[itemsForSale[id].tokenAddress][itemsForSale[id].tokenId] = false;
-        IERC721(itemsForSale[id].tokenAddress).safeTransferFrom(itemsForSale[id].seller, msg.seller, itemsForSale[id].tokenId)
+        IERC721(itemsForSale[id].tokenAddress).safeTransferFrom(itemsForSale[id].seller, msg.seller, itemsForSale[id].tokenId);
 
-        emit itemSold(id, msg.sender, itemsForSale[id].askingPrice)
+        emit itemSold(id, msg.sender, itemsForSale[id].askingPrice);
 
     }
 
