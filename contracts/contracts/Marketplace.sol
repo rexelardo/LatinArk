@@ -52,6 +52,16 @@ contract LatinArkContract {
         return newItemId;
     }
 
-    
+    function buyItem(uint256 id) payable external ItemExists(id) IsForSale(id) HasTransferApproval(itemsForSale[id].tokenAddress,itemsForSale[id].tokenId){
+        require(msg.value >= itemsForSale[id].askingPrice, "Not enough funds sent");
+        require(msg.sender != itemsForSale[id].seller);
+
+        itemsForSale.isSold = true;
+        activeItems[itemsForSale[id].tokenAddress][itemsForSale[id].tokenId] = false;
+        IERC721(itemsForSale[id].tokenAddress).safeTransferFrom(itemsForSale[id].seller, msg.seller, itemsForSale[id].tokenId)
+
+        emit itemSold(id, msg.sender, itemsForSale[id].askingPrice)
+
+    }
 
 }
