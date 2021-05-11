@@ -16,7 +16,7 @@ contract LatinArkContract {
     mapping(address => mapping (uint256 => bool)) activeItems;
 
     event itemAdded(uint256 id, uint256 tokenId, address tokenAddress, uint256 askingPrice);
-    event itemSold(uint256 id, uint256 buyer, uint256 askingPrice);
+    event itemSold(uint256 id, address buyer, uint256 askingPrice);
 
     modifier OnlyItemOwner(address tokenAddress, uint256 tokenId){
         IERC721 tokenContract = IERC721(tokenAddress);
@@ -58,7 +58,7 @@ contract LatinArkContract {
 
         itemsForSale[id].isSold = true;
         activeItems[itemsForSale[id].tokenAddress][itemsForSale[id].tokenId] = false;
-        IERC721(itemsForSale[id].tokenAddress).safeTransferFrom(itemsForSale[id].seller, msg.seller, itemsForSale[id].tokenId);
+        IERC721(itemsForSale[id].tokenAddress).safeTransferFrom(itemsForSale[id].seller, msg.sender, itemsForSale[id].tokenId);
 
         emit itemSold(id, msg.sender, itemsForSale[id].askingPrice);
 
