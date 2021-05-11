@@ -45,7 +45,7 @@ contract LatinArkContract {
         require(activeItems[tokenAddress][tokenId] == false, "item is already up for Sale");
         uint256 newItemId = itemsForSale.length;
         itemsForSale.push(AuctionItem(newItemId, tokenAddress, tokenId, payable(msg.sender), askingPrice, false));
-        activeItems[tokenAddress][tokenId] == true;
+        activeItems[tokenAddress][tokenId] = true;
 
         assert(itemsForSale[newItemId].id = newItemId);
         emit itemAdded(newItemId, tokenId, tokenAddress, askingPrice);
