@@ -1,6 +1,7 @@
 Moralis.initialize("3IcvId63X3g2jWHA2t2OCOFDHmfOw3PbF9etB6Mt");
 Moralis.serverURL = 'https://k8lq9f7lkimp.moralis.io:2053/server'
-const TOKEN_CONTRACT_ADDRESS = "0x9fA230c6465ad8ceDa74A97946bDc4Ab2DD29F6e"
+const TOKEN_CONTRACT_ADDRESS = "0xDEEd1602fcf68f7009937b2847b9b6810d129368";
+const MARKET_CONTRACT_ADDRESS = "0x0032b675693Efa6C7048210b301f0e9304Dd353C";
 
 init = async () => {
 	hideElement(userItemsSection);
@@ -8,6 +9,7 @@ init = async () => {
     hideElement(CreateItemForm);
     window.web3 = await Moralis.Web3.enable(); 
 	window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
+	window.marketplaceContract = new web3.eth.Contract(marketplaceContractAbi, MARKET_CONTRACT_ADDRESS;
 	
     initUser();
 }
@@ -162,6 +164,22 @@ getAndRenderItemData = (item, renderfunction) => {
 	item.set('nftContractAddress', TOKEN_CONTRACT_ADDRESS);
     await item.save();
     console.log(item);
+	
+	user = await Moralis.User.current();
+	const userAddress = user.get('ethAddress');
+	
+		switch(CreateItemStatusField.value){
+			case "0":
+				return;
+			case "1":
+				await ensureMarketplaceIsApproved(nftId, TOKEN_CONTRACT_ADDRESS);
+				await marketplaceContract.methods.addItemToMarket(nftId,TOKEN_CONTRACT_ADDRESS, createItemPriceField.value);
+				break;
+			case "2":
+				alert("Not yet supported");
+				return;
+				
+		}
 }
 
 mintNft = async (metadataUrl) => {
@@ -171,7 +189,16 @@ mintNft = async (metadataUrl) => {
 	
 }
 
-
+ensureMarketplaceIsApproved = async(tokenId, tokenAddress) => {
+	user = await Moralis.User.current();
+	const userAddress = user.get('ethAddress');
+	const contract = new web3.eth.Contract(tokenContractAbi, tokenAddress);
+	const approvedAddress = await contract.methods.getApproved(tokenId).call(from: userAddress);
+	if (approvedAddress != MARKET_CONTRACT_ADDRESS){
+	await contract.methods.approve(MARKET_CONTRACT_ADDRESS, tokenId);
+	}
+	
+}
 
 hideElement = (element) => element.style.display = "none";
 showElement = (element) => element.style.display = "block";
@@ -227,4 +254,3 @@ const userItemTemplate = initTemplate('itemTemplate');
 
 
 init();
-
