@@ -253,4 +253,12 @@ openUserItemsButton.onclick = openUserItems;
 const userItemTemplate = initTemplate('itemTemplate');
 
 
+//items for sale
+
+const itemsForSale = document.getElementById('itemsForSale');
+
+
+
+
+
 init();
