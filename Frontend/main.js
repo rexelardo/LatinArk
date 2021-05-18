@@ -13,9 +13,60 @@ init = async () => {
 	
     initUser();
     loadItems();
+
+    const soldItemsQuery = new Moralis.Query('SoldItems');
+    const soldItemsSubscription = await soldItemsQuery.subscribe();
+    soldItemsSubscription.on('create', onItemSold);
+
+
+    const itemsAddedQuery = new Moralis.Query('itemsForSale');
+    const itemsAddedSubscription = await itemsAddedQuery.subscribe();
+    itemsAddedSubscription.on('create', onItemAdded);
 }
 
+onItemSold = async (item) => {
+    const list = document.getElementById(`item-${item.attributes.uId}`);
+    if (listing){
+        listing.parentNode.removeChild(listing);
+    }
 
+    user = await Moralis.User.current();
+    if (user){
+        if (user.get('accounts').includes(item.attributes.buyer)){
+            const params = {uId: `${item.attributes.uId}`};
+            const soldItem  = await Moralis.Cloud.run('getItem',params);
+            if (soldItem){
+                getAndRenderItemData(soldItem, renderUserItem);
+            }
+        }
+    }
+}
+
+onItemAdded = async (item) => {
+    const params = {uId: `${item.attributes.uId}`};
+    const addedItem  = await Moralis.Cloud.run('getItem',params);
+    if (addedItem){
+        user = await Moralis.User.current();
+        if (user){
+        if (user.get('accounts').includes(addedItem.ownerOf)){
+            getAndRenderItemData(addedItem, renderUserItem);
+            return;
+        }
+        }
+        getAndRenderItemData(addedItem, renderItem);
+
+    }
+
+
+
+    }
+    const list = document.getElementById(`item-${item.attributes.uId}`);
+    if (listing){
+        listing.parentNode.removeChild(listing);
+    }
+
+    
+}
 
 initUser = async () => {
     if (await Moralis.User.current()){
@@ -115,7 +166,11 @@ loadUserItems = async() =>{
 
 loadItems = async() =>{
     const items = await Moralis.Cloud.run("getItems");
-	items.forEach(item => {
+	ser = await Moralis.User.current();
+    items.forEach(item => {
+        if(user){
+            if (user.attributes.accounts.includes(item.ownerOf)) return;
+        }
         getAndRenderItemData(item, renderItem)
     });
 }
@@ -150,6 +205,8 @@ renderItem = (item) => {
     itemForSale.getElementsByTagName('p')[0].innerText = item.description;
 
     itemForSale.getElementsByTagName('button')[0].innerText = `Buy for ${item.askingPrice}`;
+    itemForSale.getElementsByTagName('button')[0].onclick  = () => buyItem(item);
+
     itemForSale.id = `item-${item.uId}`;
     itemsForSale.appendChild(itemForSale);
 }
@@ -225,6 +282,18 @@ ensureMarketplaceIsApproved = async(tokenId, tokenAddress) => {
 	}
 	
 }
+
+
+buyItem = async (item) => {
+    user = await Moralis.User.current();
+    if (!user){
+        login();
+        return;
+    }
+    await marketplaceContract.methods.buyItem(item.uId).send({from: user.get('ethAddress'), value: item.askingPrice} );
+
+}
+
 
 hideElement = (element) => element.style.display = "none";
 showElement = (element) => element.style.display = "block";
