@@ -32,12 +32,14 @@ onItemSold = async (item) => {
 
     user = await Moralis.User.current();
     if (user){
-        if (user.get('accounts').includes(item.attributes.buyer)){
-            const params = {uId: `${item.attributes.uId}`};
-            const soldItem  = await Moralis.Cloud.run('getItem',params);
-            if (soldItem){
+        const params = {uId: `${item.attributes.uId}`};
+        const soldItem  = await Moralis.Cloud.run('getItem',params);
+        if (soldItem){
+            if (user.get('accounts').includes(item.attributes.buyer)){
                 getAndRenderItemData(soldItem, renderUserItem);
             }
+            const userItemListing = document.getElementById(`user-item-${item.tokenObjectId}`);
+            if (userItemListing) userItemListing.parentNode.removeChild(userItemListing);
         }
     }
 }
@@ -177,6 +179,7 @@ renderUserItem = (item) => {
     userItem.getElementsByTagName('img')[0].alt = item.name;
     userItem.getElementsByTagName('h5')[0].innerText = item.name;
     userItem.getElementsByTagName('p')[0].innerText = item.description;
+    userItem.id = `user-item-${item.tokenObjectId}`;
     userItems.appendChild(userItem);
 }
 
