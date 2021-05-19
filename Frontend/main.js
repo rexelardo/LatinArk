@@ -25,7 +25,7 @@ init = async () => {
 }
 
 onItemSold = async (item) => {
-    const list = document.getElementById(`item-${item.attributes.uId}`);
+    const listing  = document.getElementById(`item-${item.attributes.uId}`);
     if (listing){
         listing.parentNode.removeChild(listing);
     }
@@ -52,20 +52,9 @@ onItemAdded = async (item) => {
             getAndRenderItemData(addedItem, renderUserItem);
             return;
         }
-        }
-        getAndRenderItemData(addedItem, renderItem);
- 
     }
-
-
-
-    }
-    const list = document.getElementById(`item-${item.attributes.uId}`);
-    if (listing){
-        listing.parentNode.removeChild(listing);
-    }
-
-    
+    getAndRenderItemData(addedItem, renderItem);
+}
 }
 
 initUser = async () => {
