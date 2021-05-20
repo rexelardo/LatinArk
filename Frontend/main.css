@@ -1,0 +1,46 @@
+.bg-dark{
+    background: rgb(18, 18, 18);
+}
+
+.bg-moralis{
+    background: #b7e803!important;
+}
+
+.text-moralis{
+    background: #b7e803!important;
+}
+
+.border-moralis{
+    background: #b7e803!important;
+}
+
+.btn-moralis{
+    background: #b7e803!important;
+}
+
+.btn-moralis:hover{
+    color: #f2f2f2!important;
+    background: #b7e803!important;
+}
+
+.btn-outline-moralis{
+    border: 1px solid #b7e803!important;
+    color: #b7e803!important;
+}
+
+.btn-outline-moralis:hover{
+    color: #f2f2f2!important;
+    background: #b7e803!important;
+}
+
+.btn-primary{
+    background: #0c2E75 !important;
+    border-color: #0c2E75 !important;
+    color:  #f2f2f2 !important;
+}
+
+.btn-primary:hover{
+    background: #082151 !important;
+    border-color: #082151 !important;
+    color:  #f2f2f2 !important;
+}
