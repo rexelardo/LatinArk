@@ -51,6 +51,9 @@ onItemAdded = async (item) => {
         user = await Moralis.User.current();
         if (user){
         if (user.get('accounts').includes(addedItem.ownerOf)){
+            const userItemListing = document.getElementById(`user-item-${item.tokenObjectId}`);
+            if (userItemListing) userItemListing.parentNode.removeChild(userItemListing);
+
             getAndRenderItemData(addedItem, renderUserItem);
             return;
         }
@@ -128,7 +131,6 @@ createItem = async () => {
     await nftFile.saveIPFS();
 
     const nftFilePath = nftFile.ipfs();
-    const nftFileHash = nftFile.hash();
 
     const metadata = {
         name: CreateItemNameField.value,
@@ -151,6 +153,8 @@ openUserItems = async() =>{
 loadUserItems = async() =>{
     const ownedItems = await Moralis.Cloud.run("getUserItems");
 	ownedItems.forEach(item => {
+        const userItemListing = document.getElementById(`user-item-${item.tokenObjectId}`);
+        if (userItemListing) return; 
         getAndRenderItemData(item, renderUserItem)
     });
 }
@@ -159,8 +163,14 @@ loadItems = async() =>{
     const items = await Moralis.Cloud.run("getItems");
 	ser = await Moralis.User.current();
     items.forEach(item => {
+        
         if(user){
-            if (user.attributes.accounts.includes(item.ownerOf)) return;
+            if (user.attributes.accounts.includes(item.ownerOf)){
+                const userItemListing = document.getElementById(`user-item-${item.tokenObjectId}`);
+                if (userItemListing) userItemListing.parentNode.removeChild(userItemListing); 
+                getAndRenderItemData(item, renderUserItem);
+                return;
+            }
         }
         getAndRenderItemData(item, renderItem)
     });
@@ -174,11 +184,29 @@ initTemplate = (id) => {
 }
 
 renderUserItem = (item) => {
+    const userItemListing = document.getElementById(`user-item-${item.tokenObjectId}`);
+    if (userItemListing) return;
+
     const userItem = userItemTemplate.cloneNode(true);
     userItem.getElementsByTagName('img')[0].src = item.image;
     userItem.getElementsByTagName('img')[0].alt = item.name;
     userItem.getElementsByTagName('h5')[0].innerText = item.name;
     userItem.getElementsByTagName('p')[0].innerText = item.description;
+
+    userItem.getElementsByTagName('input')[0].value = item.askingPrice ?? 1;
+    userItem.getElementsByTagName('input')[0].disabled = item.askingPrice > 0 ;
+    userItem.getElementsByTagName('button')[0].disabled = item.askingPrice > 0 ;
+    userItem.getElementsByTagName('button')[0].onclick = async () => {
+        user = await Moralis.User.current();
+        if (!user){
+            login();
+            return; 
+        }
+        await ensureMarketplaceIsApproved(item.tokenId, item.tokenAddress);
+        await marketplaceContract.methods.addItemToMarket(item.tokenId,item.tokenAddress, userItem.getElementsByTagName('input')[0].value).send({from: user.get('ethAddress')});
+    };
+
+
     userItem.id = `user-item-${item.tokenObjectId}`;
     userItems.appendChild(userItem);
 }
@@ -218,27 +246,8 @@ getAndRenderItemData = (item, renderfunction) => {
     await nftFileMetadataFile.saveIPFS();
 
     const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
-    const nftFileMetadataFileHash = nftFileMetadataFile.hash();
-	
 	
 	const nftId = await mintNft(nftFileMetadataFilePath);
-	
-	
-
-    // Simple syntax to create a new subclass of Moralis.Object.
-    const Item = Moralis.Object.extend("Item");
-    // Create a new instance of that class.
-    const item = new Item();
-    item.set('name', CreateItemNameField.value);
-    item.set('description', CreateItemDescriptionField.value);
-    item.set('nftFilePath', nftFilePath);
-    item.set('nftFileHash', nftFileHash);
-    item.set('nftFileMetadataFilePath', nftFileMetadataFilePath);
-    item.set('nftFileMetadataFileHash', nftFileMetadataFileHash);
-	item.set('nftId', nftId);
-	item.set('nftContractAddress', TOKEN_CONTRACT_ADDRESS);
-    await item.save();
-    console.log(item);
 	
 	user = await Moralis.User.current();
 	const userAddress = user.get('ethAddress');
@@ -248,7 +257,7 @@ getAndRenderItemData = (item, renderfunction) => {
 				return;
 			case "1":
 				await ensureMarketplaceIsApproved(nftId, TOKEN_CONTRACT_ADDRESS);
-				await marketplaceContract.methods.addItemToMarket(nftId,TOKEN_CONTRACT_ADDRESS, createItemPriceField.value);
+				await marketplaceContract.methods.addItemToMarket(nftId,TOKEN_CONTRACT_ADDRESS, createItemPriceField.value).send({from: userAddress});
 				break;
 			case "2":
 				alert("Not yet supported");
