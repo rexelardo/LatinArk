@@ -9,13 +9,34 @@
 
     <title>Latin Ark</title>
 </head>
-<body>
-    <div>
-        <button id="btnConnect">Connect Wallet</button>
-        <button id="btnUserInfo">Profile</button>
-        <button id="btnOpenCreateItem">Create</button>
-		<button id="btnMyItems">My Items</button>
+<body class="bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent border-bottom border-light">
+  <div class="container-fluid">
+    <a class="navbar-brand btn btn-outline-moralis" href="#">Latin Ark</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="mx-2 d-inline flex-md-fill">
+        <input type="search" class="bg-transparent border-light form-control text-light mr-sm-2 rounded-pill" placeholder="Search by Item or Creator">
+
+    </form>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" id="btnMyItems" href="#">My Items</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+       </li>
+       </ul>
+           <div class='d-flex'>
+        <button class="btn btn-primary rounded-pill my-2 my-sm-0 mr-md-2" id="btnConnect">Connect Wallet</button>
+        <button class="btn btn-outline-moralis rounded-pill my-2 my-sm-0" id="btnUserInfo">Profile</button>
+        <button class="btn btn-outline-moralis rounded-pill my-2 my-sm-0" id="btnOpenCreateItem">Create</button>
     </div>
+    </div>
+</nav>
+
 
     <div id="userInfo">
         <h4>User Profile</h4>
