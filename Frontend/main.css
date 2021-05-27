@@ -44,3 +44,7 @@
     border-color: #082151 !important;
     color:  #f2f2f2 !important;
 }
+
+.card{
+    border-radius: .6rem !important;
+}

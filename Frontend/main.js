@@ -214,9 +214,10 @@ renderUserItem = (item) => {
 
 renderItem = (item) => {
     const itemForSale = marketplaceItemTemplate.cloneNode(true);
-    if(item.avatar){
+    if(item.sellerAvatar){
         itemForSale.getElementsByTagName('img')[0].src = item.sellerAvatar.url();
         itemForSale.getElementsByTagName('img')[0].alt = item.sellerusername;
+        itemForSale.getElementsByTagName('span')[0].innerText = item.sellerusername;
 
     }
     itemForSale.getElementsByTagName('img')[1].src = item.image;
