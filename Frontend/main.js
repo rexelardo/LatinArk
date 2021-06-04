@@ -5,8 +5,6 @@ const MARKET_CONTRACT_ADDRESS = "0x0032b675693Efa6C7048210b301f0e9304Dd353C";
 
 init = async () => {
 	hideElement(userItemsSection);
-    hideElement(userInfo);
-    hideElement(CreateItemForm);
     window.web3 = await Moralis.Web3.enable(); 
 	window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
 	window.marketplaceContract = new web3.eth.Contract(marketplaceContractAbi, MARKET_CONTRACT_ADDRESS);
@@ -97,7 +95,7 @@ logout = async () => {
 OpenUserInfo = async() =>{
     user = await Moralis.User.current();
     if (user){
-        showElement(userItemsSection);
+        $('#userInfo').modal('show');
     }else{
         login();
     }

@@ -69,15 +69,31 @@
   <!-- Modal for User Info -->
   <div class="modal fade" id="userInfo" tabindex="-1">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content bg-dark text-light">
         <div class="modal-header">
-          <h5 class="modal-title"> User Profile</h5>
+          <h5 class="modal-title">User Profile</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input type="text" id="txtUsername" required placeholder="Enter Username">
-        <input type="text" id="txtEmail" placeholder="Enter Email">
-        <small>Optional</small>
+
+          <div class="mb-3">
+            <label for="txtUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="txtUsername" required placeholder="Enter Username">
+          </div>
+
+
+
+          <div class="mb-3">
+            <label for="txtEmail" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter Email">
+            <div id="emailHelp" class="form-text">Optional</div>
+          </div>
+
+
+          <div class="mb-3">
+          <label class="form-label" for="fileAvatar">Select your Avatar</label>
+          <input type="file" class="form-control" id="fileAvatar" />
+        </div>
 
         <img width="50" height="50" src="" alt="" id="imgAvatar">
         <label for="fileAvatar">Select your avatar</label>
@@ -85,7 +101,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" id="btnLogout" class="btn btn-primary">Log Out</button>
+          <button type="button" id="btnLogout" class="btn btn-secondary">Log Out</button>
           <button type="button" id="btnCloseUserInfo" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" id="btnSaveUserInfo" class="btn btn-primary">Save</button>
         </div>
