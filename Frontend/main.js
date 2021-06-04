@@ -307,7 +307,7 @@ const userProfileButton = document.getElementById('btnUserInfo');
 userProfileButton.onclick = OpenUserInfo;
 
 const openCreateItemButton = document.getElementById('btnOpenCreateItem');
-openCreateItemButton.onclick = () => showElement(CreateItemForm);
+openCreateItemButton.onclick = () => $('#createItem').modal('show');
 
 
 // User Profile

@@ -89,15 +89,13 @@
             <div id="emailHelp" class="form-text">Optional</div>
           </div>
 
-
+          <img width="50" height="50" src="" alt="" id="imgAvatar">
           <div class="mb-3">
           <label class="form-label" for="fileAvatar">Select your Avatar</label>
           <input type="file" class="form-control" id="fileAvatar" />
         </div>
 
-        <img width="50" height="50" src="" alt="" id="imgAvatar">
-        <label for="fileAvatar">Select your avatar</label>
-        <input type="file" id="fileAvatar">
+        
 
         </div>
         <div class="modal-footer">
@@ -109,7 +107,57 @@
     </div>
   </div>
 
+ <!-- Modal for User Info -->
+ <div class="modal fade" id="createItem" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Item</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
 
+        <div class="mb-3">
+          <label for="txtUsername" class="form-label">Name</label>
+          <input type="text" class="form-control" id="txtCreateItemName" required placeholder="Enter name">
+        </div>
+
+
+
+        <div class="mb-3">
+          <label for="txtCreateItemDescription" class="form-label">Item Description</label>
+          <textarea class="form-control" id="txtCreateItemDescription" cols="30" rows="5" placeholder="Enter Item Description"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="numCreateItemPrice" class="form-label">Price</label>
+          <input type="number" min="1" step="1" id="numCreateItemPrice" placeholder="Enter Price" required class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label for="selectCreateItemStatus">Status</label>
+          <select class="form-control" id="selectCreateItemStatus">
+              <option value="0">Not for Sale</option>
+              <option value="1">Instant Buy</option>
+              <option value="2">Accept Offers</option>
+          </select>
+        </div>
+
+
+        <div class="mb-3">
+        <label class="form-label" for="fileCreateItemFile">Select File</label>
+        <input type="file" class="form-control" id="fileCreateItemFile" />
+      </div>
+
+      
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnCloseUserInfo" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="btnCreateItem" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <div id="createItem">
         <h4>Create Item</h4>
@@ -118,20 +166,8 @@
         <input type="number" min="1" step="1" id="numCreateItemPrice" placeholder="Enter Price" required>
         
 
-        <label for="selectCreateItemStatus">Status</label>
-        <select id="selectCreateItemStatus">
-            <option value="0">Not for Sale</option>
-            <option value="1">Instant Buy</option>
-            <option value="2">Accept Offers</option>
-        </select>
+      
 
-        <label for="fileCreateItemFile">Select File</label>
-        <input type="file" id="fileCreateItemFile">
-
-
-        <button id="btnCloseCreateItem">Close</button>
-        <button id="btnCreateItem">Create NFT!</button>
-    </div>
 
 
 	<div id="userItems">
