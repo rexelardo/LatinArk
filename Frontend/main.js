@@ -140,7 +140,7 @@ createItem = async () => {
 openUserItems = async() =>{
     user = await Moralis.User.current();
     if (user){
-        showElement(userItemsSection);
+        $('#userItems').modal('show');
         
 	}else{
         login();

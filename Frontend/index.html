@@ -65,6 +65,16 @@
 </div>
 
 
+<div id="itemTemplate"> 
+  <img src="" alt="">
+  <h5></h5>
+  <p></p>
+  <input type="number" min="1" step="1">
+  <button>Put for sale</button>
+</div>
+
+
+
 
   <!-- Modal for User Info -->
   <div class="modal fade" id="userInfo" tabindex="-1">
@@ -107,7 +117,7 @@
     </div>
   </div>
 
- <!-- Modal for User Info -->
+ <!-- Modal for Create Item -->
  <div class="modal fade" id="createItem" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content bg-dark text-light">
@@ -152,7 +162,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" id="btnCloseUserInfo" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="btnCloseCreateItem" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" id="btnCreateItem" class="btn btn-primary">Create</button>
       </div>
     </div>
@@ -160,27 +170,29 @@
 </div>
 
 
-	<div id="userItems">
-		<h4>My Items</h4>
-		<div id="userItemsList"></div>
-		<button id="btnCloseUserItems">Close</button>
-		
-	</div>
-	
+ <!-- Modal for Create Item -->
+ <div class="modal fade" id="userItems" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">My Items</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body row row-cols-1 row-cols-md-4 mt-5" id="userItemsList">
 
+      
 
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnCloseUserItems" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   
 
 
 
-    <div id="itemTemplate">
-        <img src="" alt="">
-        <h5></h5>
-        <p></p>
-        <input type="number" min="1" step="1">
-        <button>Put for sale</button>
-    </div>
-	
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
