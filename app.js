@@ -6,7 +6,223 @@ app.use(express.static("public"))
 
 // define the first route
 app.get("/", function (req, res) {
-  res.send("Frontend/index.html")
+  res.send("<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+
+    <title>Latin Ark</title>
+</head>
+<body class="bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent border-bottom border-light">
+  <div class="container-fluid">
+    <a class="navbar-brand btn btn-outline-moralis" href="#">Latin Ark</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="mx-2 d-inline flex-md-fill">
+        <input type="search" class="bg-transparent border-light form-control text-light mr-sm-2 rounded-pill" placeholder="Search by Item or Creator">
+
+    </form>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" id="btnMyItems" href="#">My Items</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+       </li>
+       </ul>
+           <div class='d-flex'>
+        <button class="btn btn-primary rounded-pill my-2 my-sm-0 mr-md-2" id="btnConnect">Connect Wallet</button>
+        <button class="btn btn-outline-moralis rounded-pill my-2 my-sm-0" id="btnUserInfo">Profile</button>
+        <button class="btn btn-outline-moralis rounded-pill my-2 my-sm-0" id="btnOpenCreateItem">Create</button>
+    </div>
+    </div>
+</nav>
+
+
+<div class="container">
+  <div class='row row-cols-1 row-cols-md-4 mt-5' id="itemsForSale"></div>
+</div>
+
+	
+
+
+<div class="col mb-4" id="marketplaceItemTemplate">
+  <div class="card h-100 border-light bg-transparent text-light">
+     <nav class="card-header navbar navbar-dark text-light p-1">
+      <img src="" alt="">
+      <span></span>
+     </nav>
+    
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body d-flex align-items-end">
+      <div class="w-100">
+        <h5 class="card-title"></h5>
+        <p class="card-text"></p>
+        <button class="btn btn-primary btn-block"></button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="col mb-4" id="itemTemplate">
+  <div class="card h-100 border-light bg-transparent text-light">
+    
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body d-flex align-items-end">
+      <div class="w-100">
+        <h5 class="card-title"></h5>
+        <p class="card-text"></p>
+
+        <div class="input-group mb-3">
+          <input type="number" min="1" step="1" class="form-control" placeholder="Price ">
+          <button class="btn btn-outline-secondary" type="button">Put for Sale</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Modal for User Info -->
+  <div class="modal fade" id="userInfo" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title">User Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <label for="txtUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="txtUsername" required placeholder="Enter Username">
+          </div>
+
+
+
+          <div class="mb-3">
+            <label for="txtEmail" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter Email">
+            <div id="emailHelp" class="form-text">Optional</div>
+          </div>
+
+          <img width="50" height="50" src="" alt="" id="imgAvatar">
+          <div class="mb-3">
+          <label class="form-label" for="fileAvatar">Select your Avatar</label>
+          <input type="file" class="form-control" id="fileAvatar" />
+        </div>
+
+        
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btnLogout" class="btn btn-secondary">Log Out</button>
+          <button type="button" id="btnCloseUserInfo" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="btnSaveUserInfo" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- Modal for Create Item -->
+ <div class="modal fade" id="createItem" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Item</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label for="txtUsername" class="form-label">Name</label>
+          <input type="text" class="form-control" id="txtCreateItemName" required placeholder="Enter name">
+        </div>
+
+
+
+        <div class="mb-3">
+          <label for="txtCreateItemDescription" class="form-label">Item Description</label>
+          <textarea class="form-control" id="txtCreateItemDescription" cols="30" rows="5" placeholder="Enter Item Description"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="numCreateItemPrice" class="form-label">Price</label>
+          <input type="number" min="1" step="1" id="numCreateItemPrice" placeholder="Enter Price" required class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label for="selectCreateItemStatus">Status</label>
+          <select class="form-control" id="selectCreateItemStatus">
+              <option value="0">Not for Sale</option>
+              <option value="1">Instant Buy</option>
+              <option value="2">Accept Offers</option>
+          </select>
+        </div>
+
+
+        <div class="mb-3">
+        <label class="form-label" for="fileCreateItemFile">Select File</label>
+        <input type="file" class="form-control" id="fileCreateItemFile" />
+      </div>
+
+      
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnCloseCreateItem" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="btnCreateItem" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <!-- Modal for Create Item -->
+ <div class="modal fade" id="userItems" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">My Items</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body row row-cols-1 row-cols-md-4 mt-5" id="userItemsList">
+
+      
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnCloseUserItems" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+	<script src="abi.js"></script>
+    <script src="main.js"></script>
+
+</body>
+</html>")
 })
 
 // start the server listening for requests
